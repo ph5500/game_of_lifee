@@ -30,14 +30,27 @@ const Grid = props => {
   });
 
   const [running, setRunning] = useState(false);
+  const [generation, setGeneration] = useState(0);
 
+  const [pace, setPace] = useState(1000);
+  //stores reference of the current state
   const runnningRef = useRef(running);
   runnningRef.current = running;
+
+  const gens = useRef(generation);
+  gens.current = generation;
+
+  const speedRef = useRef(pace);
+  speedRef.current = pace;
 
   const runSimulation = useCallback(() => {
     if (!runnningRef.current) {
       return;
     }
+
+    setGeneration(gens => {
+      return (gens = gens + 1);
+    });
 
     setGrid(g => {
       return produce(g, gridCopy => {
@@ -62,7 +75,7 @@ const Grid = props => {
       });
     });
 
-    setTimeout(runSimulation, 555);
+    setTimeout(runSimulation, speedRef.current);
   }, []);
 
   return (
@@ -88,6 +101,7 @@ const Grid = props => {
           }
 
           setGrid(rows);
+          setGeneration(0);
         }}
       >
         Random
@@ -96,16 +110,48 @@ const Grid = props => {
       <button
         onClick={() => {
           setGrid(generateEmptyGrid());
+          setGeneration(0);
         }}
       >
         Clear
       </button>
-      <form>
-        <label>
-          <input type="text" placeholder="speed in ms" name="speed" />
-          <button>Update</button>
-        </label>
-      </form>
+      <h3>Speed Settings</h3>
+      <button
+        onClick={() => {
+          setPace(150);
+        }}
+      >
+        .15 Seconds
+      </button>
+      <button
+        onClick={() => {
+          setPace(250);
+        }}
+      >
+        .25 Seconds
+      </button>
+      <button
+        onClick={() => {
+          setPace(500);
+        }}
+      >
+        .5 Seconds
+      </button>
+      <button
+        onClick={() => {
+          setPace(1000);
+        }}
+      >
+        1 Second
+      </button>
+      <button
+        onClick={() => {
+          setPace(5000);
+        }}
+      >
+        5 Seconds
+      </button>
+      <h2>Generations: {generation}</h2>
       <div
         style={{
           display: "grid",
