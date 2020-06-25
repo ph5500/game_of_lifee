@@ -11,13 +11,13 @@ const App = props => {
         Conway's Game of Life is a Zero player game that was invented by British
         mathematician John Horton Conway in the 70's. It is considered a zero
         player game because it will change and mutate without anybody playing.
-        has two possible states, alive or dead. Cellular automata is a program
-        that runs on data that's stored on a 2D grid that can show complex
-        behavior from a set of simple rules. Each time the grid changes is
-        considered a generation.This game has been used to simulate many real
+        There are two possible states, alive or dead. Cellular automata is a
+        program that runs on data that's stored on a 2D grid that can show
+        complex behavior from a set of simple rules. Each time the grid changes
+        is considered a generation.This game has been used to simulate many real
         life scenarios across Physics, Biology, Economics, and Philosophy. There
-        are a number of patter that continually reappear over time including the
-        Block, Boat, Blinker, Toad, Glider, LWSS, and the Pulsar.
+        are a number of patterns that continually reappear over time including
+        the Block, Boat, Blinker, Toad, Glider, LWSS, and the Pulsar.
       </p>
       <h2>The Rules are the following:</h2>
       <ol>

@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef } from "react";
 import produce from "immer";
+import styled from "styled-components";
 
 import {
   ButtonDropdown,
@@ -8,8 +9,8 @@ import {
   DropdownToggle
 } from "reactstrap";
 
-const numRows = 50;
-const numCols = 50;
+const numRows = 40;
+const numCols = 40;
 
 const operations = [
   [0, 1],
@@ -21,6 +22,16 @@ const operations = [
   [1, 0],
   [-1, 0]
 ];
+
+const Button = styled.button`
+  border-radius: 5px;
+  margin: 3px;
+  background-color: white;
+`;
+
+const Cells = styled.div`
+  background-color: white;
+`;
 
 const generateEmptyGrid = () => {
   const rows = [];
@@ -95,7 +106,7 @@ const Grid = props => {
 
   return (
     <>
-      <button
+      <Button
         onClick={() => {
           setRunning(!running);
           if (!running) {
@@ -104,9 +115,9 @@ const Grid = props => {
           }
         }}
       >
-        {running ? "Dead(Stop)" : "Alive(Start)"}
-      </button>
-      <button
+        {running ? "Stop(Dead)" : "Start(Alive)"}
+      </Button>
+      <Button
         onClick={() => {
           const rows = [];
           for (let i = 0; i < numRows; i++) {
@@ -120,56 +131,59 @@ const Grid = props => {
         }}
       >
         Random
-      </button>
-
-      <button
+      </Button>
+      <Button
         onClick={() => {
           setGrid(generateEmptyGrid());
           setGeneration(0);
         }}
       >
         Clear
-      </button>
+      </Button>
+
       <h3>Speed Settings</h3>
-      <button
+      <Button
         onClick={() => {
           setPace(150);
         }}
       >
         .15 Seconds
-      </button>
-      <button
+      </Button>
+      <Button
         onClick={() => {
           setPace(250);
         }}
       >
         .25 Seconds
-      </button>
-      <button
+      </Button>
+      <Button
         onClick={() => {
           setPace(500);
         }}
       >
         .5 Seconds
-      </button>
-      <button
+      </Button>
+      <Button
         onClick={() => {
           setPace(1000);
         }}
       >
         1 Second
-      </button>
-      <button
+      </Button>
+      <Button
         onClick={() => {
           setPace(5000);
         }}
       >
         5 Seconds
-      </button>
+      </Button>
+
       <div>
         <h3>Select a color:</h3>
+
         <ButtonDropdown isOpen={dropdownOpen} toggle={toggleDropColor}>
           <DropdownToggle caret>colors</DropdownToggle>
+
           <DropdownMenu>
             <DropdownItem
               onClick={() => {
@@ -210,6 +224,7 @@ const Grid = props => {
         </ButtonDropdown>
       </div>
       <h2>Generations: {generation}</h2>
+
       <div
         style={{
           display: "grid",

@@ -8,6 +8,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  margin: 5px;
+  background-color: lightgray;
+  padding: 5px;
+}
+
+p {
+  font-style: italic;
+  font-size: 14px;
+}
+
+li {
+  font-weight: bold;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
