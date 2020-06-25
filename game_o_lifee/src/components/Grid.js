@@ -1,6 +1,13 @@
 import React, { useState, useCallback, useRef } from "react";
 import produce from "immer";
 
+import {
+  ButtonDropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle
+} from "reactstrap";
+
 const numRows = 50;
 const numCols = 50;
 
@@ -24,6 +31,9 @@ const generateEmptyGrid = () => {
   return rows;
 };
 
+var randomColor = require("randomcolor");
+var color = randomColor();
+
 const Grid = props => {
   const [grid, setGrid] = useState(() => {
     return generateEmptyGrid();
@@ -33,7 +43,12 @@ const Grid = props => {
   const [generation, setGeneration] = useState(0);
 
   const [pace, setPace] = useState(1000);
+  const [cellColor, setCellColor] = useState(color);
   //stores reference of the current state
+
+  const [dropdownOpen, setOpen] = useState(false);
+  const toggleDropColor = () => setOpen(!dropdownOpen);
+
   const runnningRef = useRef(running);
   runnningRef.current = running;
 
@@ -89,7 +104,7 @@ const Grid = props => {
           }
         }}
       >
-        {running ? "stop" : "start"}
+        {running ? "Dead(Stop)" : "Alive(Start)"}
       </button>
       <button
         onClick={() => {
@@ -151,6 +166,49 @@ const Grid = props => {
       >
         5 Seconds
       </button>
+      <div>
+        <h3>Select a color:</h3>
+        <ButtonDropdown isOpen={dropdownOpen} toggle={toggleDropColor}>
+          <DropdownToggle caret>colors</DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem
+              onClick={() => {
+                setCellColor("purple");
+              }}
+            >
+              Purple
+            </DropdownItem>
+            <DropdownItem
+              onClick={() => {
+                setCellColor("pink");
+              }}
+            >
+              Pink
+            </DropdownItem>
+            <DropdownItem
+              onClick={() => {
+                setCellColor("Green");
+              }}
+            >
+              Green
+            </DropdownItem>
+            <DropdownItem
+              onClick={() => {
+                setCellColor("Black");
+              }}
+            >
+              Black
+            </DropdownItem>
+            <DropdownItem
+              onClick={() => {
+                setCellColor("Blue");
+              }}
+            >
+              Blue
+            </DropdownItem>
+          </DropdownMenu>
+        </ButtonDropdown>
+      </div>
       <h2>Generations: {generation}</h2>
       <div
         style={{
@@ -171,7 +229,7 @@ const Grid = props => {
               style={{
                 width: 20,
                 height: 20,
-                backgroundColor: grid[i][k] ? "purple" : undefined,
+                backgroundColor: grid[i][k] ? `${cellColor}` : undefined,
                 border: "solid 1px black"
               }}
             />
