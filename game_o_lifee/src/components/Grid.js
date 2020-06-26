@@ -27,10 +27,10 @@ const Button = styled.button`
   border-radius: 5px;
   margin: 3px;
   background-color: white;
-`;
-
-const Cells = styled.div`
-  background-color: white;
+  :hover {
+    background-color: #5de6de;
+    background-image: linear-gradient(315deg, #5de6de 0%, #b58ecc 74%);
+  }
 `;
 
 const generateEmptyGrid = () => {
@@ -41,7 +41,7 @@ const generateEmptyGrid = () => {
 
   return rows;
 };
-
+// uses a modulous to allow the edges to wrap and then shifts index values (x,y)to beginning or end
 const countOperations = (grid, x, y) => {
   return operations.reduce((ac, [i, j]) => {
     const newI = (i + x + numRows) % numRows;
