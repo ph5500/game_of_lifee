@@ -38,6 +38,7 @@ const App = props => {
           as if by reproduction.
         </li>
       </ol>
+
       <Grid generations={generations} />
       {/* old implementation */}
       {/* <h2> Generations: {generations}</h2> */}

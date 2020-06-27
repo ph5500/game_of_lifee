@@ -27,10 +27,10 @@ const Button = styled.button`
   border-radius: 5px;
   margin: 3px;
   background-color: white;
-`;
-
-const Cells = styled.div`
-  background-color: white;
+  :hover {
+    background-color: #5de6de;
+    background-image: linear-gradient(315deg, #5de6de 0%, #b58ecc 74%);
+  }
 `;
 
 const generateEmptyGrid = () => {
@@ -40,6 +40,25 @@ const generateEmptyGrid = () => {
   }
 
   return rows;
+};
+// uses a modulous to allow the edges to wrap and then shifts index values (x,y)to beginning or end
+const countOperations = (grid, x, y) => {
+  return operations.reduce((ac, [i, j]) => {
+    const newI = (i + x + numRows) % numRows;
+    const newJ = (j + y + numCols) % numCols;
+    ac += grid[newI][newJ];
+    return ac;
+    //checking bounds of the grid
+  }, 0);
+};
+
+const lifeGenCount = grid => {
+  for (let i = 0; i < grid.length; i++) {
+    let result = grid[i].find(elem => elem === 1);
+    if (result === 1) {
+      return result;
+    }
+  }
 };
 
 var randomColor = require("randomcolor");
@@ -82,14 +101,7 @@ const Grid = props => {
       return produce(g, gridCopy => {
         for (let i = 0; i < numRows; i++) {
           for (let k = 0; k < numCols; k++) {
-            let neighbors = 0;
-            operations.forEach(([x, y]) => {
-              const newI = i + x;
-              const newK = k + y;
-              if (newI >= 0 && newI < numRows && newK >= 0 && newK < numCols) {
-                neighbors += g[newI][newK];
-              }
-            });
+            let neighbors = countOperations(g, i, k);
 
             if (neighbors < 2 || neighbors > 3) {
               gridCopy[i][k] = 0;
@@ -224,7 +236,6 @@ const Grid = props => {
         </ButtonDropdown>
       </div>
       <h2>Generations: {generation}</h2>
-
       <div
         style={{
           display: "grid",
